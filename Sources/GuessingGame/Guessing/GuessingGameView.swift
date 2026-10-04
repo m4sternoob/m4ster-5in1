@@ -283,6 +283,33 @@ struct GuessingGameView: View {
             }
             .onAppear { guessFieldFocused = true }
 
+            Button(action: { model.askHint() }) {
+                Label("Hint (\(model.hintsLeft) left)", systemImage: "lightbulb.fill")
+                    .font(.subheadline.bold())
+                    .foregroundColor(model.hintsLeft > 0 ? Theme.warnLow : Theme.textMuted)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Theme.surface2)
+                    .cornerRadius(10)
+            }
+            .buttonStyle(ScaleButtonStyle())
+            .disabled(model.hintsLeft == 0)
+
+            if let hint = model.shownHints.last {
+                HStack(alignment: .top, spacing: 10) {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundColor(Theme.warnLow)
+                    Text(hint)
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textPrimary)
+                    Spacer()
+                }
+                .padding(12)
+                .background(Theme.warnLow.opacity(0.12))
+                .cornerRadius(10)
+                .transition(.scale.combined(with: .opacity))
+            }
+
             VStack(alignment: .leading, spacing: 10) {
                 Text("Quick Picks")
                     .font(.headline)
@@ -321,6 +348,7 @@ struct GuessingGameView: View {
                 }
             }
         }
+        .animation(.easeInOut(duration: 0.25), value: model.shownHints.count)
         .padding(20)
         .background(Theme.surface.opacity(0.6))
         .cornerRadius(16)

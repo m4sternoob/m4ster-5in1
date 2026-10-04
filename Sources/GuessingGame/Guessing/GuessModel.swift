@@ -112,6 +112,25 @@ final class GuessModel: ObservableObject {
     @Published var best: Int? = nil
     @Published var isNewBest = false
 
+    // Cryptic hints (HintEngine) — 3 per round, never name the number.
+    @Published var shownHints: [String] = []
+    private let maxHintsPerRound = 3
+
+    var hintsLeft: Int { max(0, maxHintsPerRound - shownHints.count) }
+
+    func askHint() {
+        guard phase == .playing, hintsLeft > 0 else { return }
+        let candidates = HintEngine.hintsFor(
+            target: secret,
+            guesses: attempts.map(\.value),
+            lowerBound: lower,
+            upperBound: upper
+        )
+        if let next = candidates.first(where: { !shownHints.contains($0) }) {
+            shownHints.append(next)
+        }
+    }
+
     // Lifetime stats (all difficulties combined)
     @Published var gamesPlayed = 0
     @Published var gamesWon = 0
@@ -208,6 +227,7 @@ final class GuessModel: ObservableObject {
             secret = Int.random(in: lo...hi)
         }
         attempts = []
+        shownHints = []
         guessText = ""
         errorMessage = nil
         proximity = nil
@@ -308,6 +328,7 @@ final class GuessModel: ObservableObject {
     func backToSetup() {
         phase = .setup
         attempts = []
+        shownHints = []
         guessText = ""
         errorMessage = nil
         proximity = nil
