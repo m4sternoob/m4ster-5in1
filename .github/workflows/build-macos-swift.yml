@@ -110,13 +110,13 @@ jobs:
       - name: Package zip
         run: |
           set -euo pipefail
-          ditto -c -k --keepParent "5IN1.app" "5IN1-macOS-v3.2.0.zip"
-          shasum -a 256 "5IN1-macOS-v3.2.0.zip" | tee sha256.txt
+          ditto -c -k --keepParent "5IN1.app" "5IN1-macOS-v3.2.1.zip"
+          shasum -a 256 "5IN1-macOS-v3.2.1.zip" | tee sha256.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 5IN1-macOS-v3.2.0
+          name: 5IN1-macOS-v3.2.1
           path: |
-            5IN1-macOS-v3.2.0.zip
+            5IN1-macOS-v3.2.1.zip
             sha256.txt
