@@ -20,6 +20,10 @@ Five games, one native macOS app. This is the living plan — checked off as thi
 - [x] Sound effects (subtle, mutable, off by default on first launch)
 - [ ] Ship v3.2.0 build, verify signature + linked libs, user playtests all five games
 
+## v3.2.1 — Hint parity with Android (in progress)
+- [x] Guessing: cryptic hints (HintEngine Swift port — fun facts, digit wordplay, math riddles, range hints), 3 per round
+- [ ] Ship v3.2.1 build, verify signature + linked libs, user playtests all five games
+
 ## v3.3 — Social & sharing
 - [ ] Export/share score cards (PNG) for each game
 - [ ] Local leaderboards across all five games on one screen
