@@ -1,7 +1,7 @@
 import SwiftUI
 
 // Ludo board — you (red) vs the CPU(s). Glowing tokens are movable: tap one.
-// 2-player or 4-player (you + 3 CPU), with a fast-CPU animation toggle.
+// You vs CPU, or you vs 3 CPUs, with a fast-CPU animation toggle.
 
 struct LudoView: View {
     @StateObject private var model = LudoModel()
@@ -111,8 +111,8 @@ struct LudoView: View {
     private var controlsRow: some View {
         HStack {
             Picker("Players", selection: $model.fourPlayer) {
-                Text("2 players").tag(false)
-                Text("4 players").tag(true)
+                Text("vs CPU").tag(false)
+                Text("vs 3 CPU").tag(true)
             }
             .pickerStyle(.segmented)
             .frame(width: 190)

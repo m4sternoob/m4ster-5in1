@@ -57,7 +57,10 @@ final class TicTacToeModel: ObservableObject {
     func resetForNewGameCommand() { newGame() }
 
     func tap(_ i: Int) {
-        guard board[i] == .empty, !gameOver else { return }
+        // Ignore taps while the CPU's move is still scheduled — otherwise a
+        // fast second tap lands two Xs in one turn (and queues a second CPU
+        // move on top of it).
+        guard board[i] == .empty, !gameOver, !cpuThinking else { return }
         board[i] = .x
         SoundFX.shared.play(.tap)
         afterMove()

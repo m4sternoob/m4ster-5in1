@@ -122,9 +122,11 @@ final class SnakeGameModel: ObservableObject {
 
         let head = body[0]
         var newHead = head
+        // SpriteKit is y-up: model y=0 is the bottom row, so moving up
+        // means increasing y.
         switch direction {
-        case .up: newHead.y -= 1
-        case .down: newHead.y += 1
+        case .up: newHead.y += 1
+        case .down: newHead.y -= 1
         case .left: newHead.x -= 1
         case .right: newHead.x += 1
         }
