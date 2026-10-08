@@ -18,7 +18,7 @@
 
 ## What's new in v3.2.1
 
-The guessing game gets **cryptic hints** (💡, 3 per round): fun facts ("say hi to my Valentine!"),
+The guessing game gets **cryptic hints** (💡, 3 per round): fun facts ("Say hi to my Valentine!"),
 digit wordplay ("a zero stacked on top of another zero") and little math riddles — the same
 HintEngine the Android build has, now on Mac.
 
@@ -84,10 +84,16 @@ in whichever game is active.
 
 ## ⬇️ Download
 
-Grab the latest `.zip` from the [**Releases**](https://github.com/m4sternoob/guessing-game-gui/releases) page,
+Once a v3.x build is published, grab the `.zip` from the
+[**Releases**](https://github.com/m4sternoob/m4ster-5in1/releases) page,
 unzip, and open `5IN1.app`. Requires macOS 14 (Sonoma) or later, Apple Silicon or Intel.
 
-> The v3.2.1 release build is being finalized — it will appear on the Releases page once published.
+> ⚠️ Honest status: the builds on the [Releases](https://github.com/m4sternoob/m4ster-5in1/releases)
+> page are still the old v1.0.0–v2.5.1 C++/SDL2 builds — broken, and superseded by this rewrite.
+> Until a v3.x release is published, the quickest way to run it is to build from source below.
+
+Since the app is ad-hoc signed (not notarized), macOS may refuse to open it on first launch.
+**Right-click → Open** on `5IN1.app` once to get past Gatekeeper; after that it launches normally.
 
 ## 🔨 Build from source
 
@@ -111,6 +117,7 @@ Sources/GuessingGame/
   ContentView.swift            # 5-game toolbar switcher
   Guessing/
     GuessModel.swift           # state machine + hot/cold proximity + stats
+    HintEngine.swift           # cryptic hint generator (facts, wordplay, riddles)
     GuessingGameView.swift     # guessing game UI
   Snake/
     SnakeGameModel.swift       # snake rules (movement, food, wrap mode, speeds, combos)
@@ -146,3 +153,8 @@ source/ios/                    # iOS/SwiftUI version (separate target)
 ## 📄 License
 
 MIT — see [LICENSE](LICENSE).
+
+## 💬 Feedback
+
+Found a bug or want a game added? Open an issue, or reach me at
+[masternoob102030@gmail.com](mailto:masternoob102030@gmail.com).
