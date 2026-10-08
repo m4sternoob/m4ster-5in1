@@ -57,17 +57,25 @@ final class SnakeScene: SKScene {
                 wasGameOver = true
                 shakeBoard()
             }
-            return
-        }
-        wasGameOver = false
-        guard !model.isPaused else { return }
-
-        if lastUpdateTime == 0 {
+            // Keep the clock fresh while the game-over card is up: otherwise
+            // the first frame after Restart sees a huge delta and the snake
+            // burns through dozens of steps at once.
             lastUpdateTime = currentTime
             return
         }
-        let delta = currentTime - lastUpdateTime
+        wasGameOver = false
+
+        let delta: TimeInterval
+        if lastUpdateTime == 0 {
+            delta = 0
+        } else {
+            delta = currentTime - lastUpdateTime
+        }
         lastUpdateTime = currentTime
+        // Paused frames still advance the clock (above) but skip stepping, so
+        // resuming never replays the paused time as snake movement.
+        guard !model.isPaused else { return }
+
         model.accumulator += delta
         while model.accumulator >= model.stepTime {
             model.accumulator -= model.stepTime
@@ -264,9 +272,9 @@ final class SnakeScene: SKScene {
             eyeX2 = rect.minX + rect.width * 0.8
             eyeY = rect.minY + rect.height * 0.35
         case .up:
-            eyeY = rect.minY + rect.height * 0.25
-        case .down:
             eyeY = rect.minY + rect.height * 0.75
+        case .down:
+            eyeY = rect.minY + rect.height * 0.25
         case .none:
             eyeY = rect.minY + rect.height * 0.35
         }

@@ -79,7 +79,7 @@ final class SnakesLaddersModel: ObservableObject {
             self.rolling = false
             let roll = Int.random(in: 1...6)
             self.diceValue = roll
-            self.message = (side == .player ? "You rolled \(roll)." : "CPU rolled \(roll).")
+            self.message = "\(self.sideName(side)) rolled \(roll)."
             self.beginMove(side: side, steps: roll)
         }
     }

@@ -295,19 +295,25 @@ struct GuessingGameView: View {
             .buttonStyle(ScaleButtonStyle())
             .disabled(model.hintsLeft == 0)
 
-            if let hint = model.shownHints.last {
-                HStack(alignment: .top, spacing: 10) {
-                    Image(systemName: "lightbulb.fill")
-                        .foregroundColor(Theme.warnLow)
-                    Text(hint)
-                        .font(.subheadline)
-                        .foregroundColor(Theme.textPrimary)
-                    Spacer()
+            if !model.shownHints.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    // shownHints never contains duplicates (askHint skips
+                    // already-shown hints), so the text itself is a safe id.
+                    ForEach(model.shownHints, id: \.self) { hint in
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "lightbulb.fill")
+                                .foregroundColor(Theme.warnLow)
+                            Text(hint)
+                                .font(.subheadline)
+                                .foregroundColor(Theme.textPrimary)
+                            Spacer()
+                        }
+                        .padding(12)
+                        .background(Theme.warnLow.opacity(0.12))
+                        .cornerRadius(10)
+                        .transition(.scale.combined(with: .opacity))
+                    }
                 }
-                .padding(12)
-                .background(Theme.warnLow.opacity(0.12))
-                .cornerRadius(10)
-                .transition(.scale.combined(with: .opacity))
             }
 
             VStack(alignment: .leading, spacing: 10) {

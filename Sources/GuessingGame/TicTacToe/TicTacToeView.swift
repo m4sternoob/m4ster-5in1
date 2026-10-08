@@ -129,7 +129,7 @@ struct TicTacToeView: View {
         }
         .buttonStyle(.plain)
         .animation(.spring(response: 0.3, dampingFraction: 0.55), value: mark)
-        .disabled(mark != .empty || model.gameOver)
+        .disabled(mark != .empty || model.gameOver || model.cpuThinking)
     }
 }
 

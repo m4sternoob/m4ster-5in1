@@ -64,7 +64,9 @@ struct SnakeGameView: View {
                 Text("Snake")
                     .font(.title2.bold())
                     .foregroundColor(Theme.textPrimary)
-                Text("Eat the red dots. Don't hit the walls.")
+                Text(model.wrapMode
+                     ? "Eat the red dots. Wrap around the edges."
+                     : "Eat the red dots. Don't hit the walls.")
                     .font(.subheadline)
                     .foregroundColor(Theme.textSecondary)
             }
