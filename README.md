@@ -157,4 +157,4 @@ MIT — see [LICENSE](LICENSE).
 ## 💬 Feedback
 
 Found a bug or want a game added? Open an issue, or reach me at
-[masternoob102030@gmail.com](mailto:masternoob102030@gmail.com).
+[xyaz@gmail.com](mailto:xyaz@gmail.com).
