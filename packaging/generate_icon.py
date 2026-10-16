@@ -1,12 +1,27 @@
 #!/usr/bin/env python3
-"""Generate packaging/AppIcon-1024.png procedurally.
+"""Generate packaging/AppIcon-1024.png.
 
-Runs in CI (pip install pillow) so no binary icon lives in git.
-Dark slate tile + neon-blue glowing "?", matching the app's theme.
+Uses the branded 5IN1 icon (packaging/icon-source-1024.png) when present.
+Falls back to the procedural "?" tile when it is missing.
+
+Runs in CI (pip install pillow) so the icon binary is committed once and reused.
 """
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import os
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(HERE, "icon-source-1024.png")
+OUT = os.path.join(HERE, "AppIcon-1024.png")
+
+if os.path.exists(SRC):
+    img = Image.open(SRC).convert("RGB")
+    if img.size != (1024, 1024):
+        img = img.resize((1024, 1024), Image.LANCZOS)
+    img.save(OUT)
+    print("saved", OUT, "(branded 5IN1 icon)")
+    raise SystemExit(0)
+
+# --- Fallback: procedural "?" tile (original behavior) ---
 S = 1024
 BG = (13, 15, 20)          # #0D0F14
 GRID = (26, 29, 38)
@@ -62,6 +77,5 @@ img = Image.alpha_composite(img.convert("RGBA"), layer2).convert("RGB")
 
 ImageDraw.Draw(img).text((x, y), glyph, font=font, fill=NEON_HOT)
 
-out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "AppIcon-1024.png")
-img.save(out)
-print("saved", out)
+img.save(OUT)
+print("saved", OUT, "(procedural fallback)")
